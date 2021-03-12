@@ -28,4 +28,5 @@ keyboard
  - b : add some small random offset to all weights
  - v : only generate new frequencies
  - r : kickstart the network (useful for when theres no signal anymore)
+ - space : toggle slow-motion view (disables sound)
       
