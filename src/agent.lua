@@ -1,6 +1,5 @@
 Agent = {}
 
-THRESHOLD = 0.2
 decay = 0.9
 
 function Agent:new(x,y)
@@ -28,8 +27,7 @@ function Agent:new(x,y)
 	new.input = 0.5
 	new.smooth = 0.5
 
-	new.decay = math.exp(-5*math.random())
-	print(new.decay)
+	new.decay = 0.1
 
 	new.group = group or {}
 
@@ -91,9 +89,7 @@ end
 function Agent:update(dt)
 
 	self.c = #self.group
-
-	--self.d = (self.c*0.5 + 1.0)*self.r*1.0
-	--self.d = self.r*2.0*math.exp(-self.c*0.2)--*(0.5+temp)--*1.5
+	
 	self.d = 3.0*self.r
 
 	local xp = self.x
@@ -156,18 +152,11 @@ end
 
 function Agent:draw()
 
-	local c = math.abs(self.state)--(self.c-1)*0.1--self.state*0.3--(self.c-1)*0.1
+	local c = math.abs(self.state)
 
-	--[[love.graphics.setColor(0.8+c,0.8-c,0.8 -c)
-	love.graphics.circle("fill", self.x+c*5, self.y, self.r)
-	love.graphics.setColor(1,1,1)
-	love.graphics.circle("line", self.x+c*5, self.y, self.r)]]
 
-	--if self.state > 0.5 then
-		love.graphics.setColor(0.0, 1.0*c, 0.8*c )
-	--else
-	--	love.graphics.setColor(1.0*c, 0.2, 0.8*c )
-	--end
+	love.graphics.setColor(0.0, 1.0*c, 0.8*c )
+
 	love.graphics.circle("fill", self.x, self.y, self.r)
 	love.graphics.setColor(1,1,1)
 	love.graphics.circle("line", self.x, self.y, self.r)
@@ -176,17 +165,11 @@ end
 
 function Agent:draw2()
 
-	local c = math.abs(self.state)--(self.c-1)*0.1--self.state*0.3--(self.c-1)*0.1
+	local c = math.abs(self.state)
 
-	--[[love.graphics.setColor(0.8+c,0.8-c,0.8 -c)
-	love.graphics.circle("fill", self.x+c*5, self.y, self.r)
-	love.graphics.setColor(1,1,1)
-	love.graphics.circle("line", self.x+c*5, self.y, self.r)]]
-	--if self.state > 0.5 then
-		love.graphics.setColor(0.0, 1.0, 0.8, 0.005*c*c)
-	--else
-	--	love.graphics.setColor(1.0, 0.0, 0.8, 0.01*c*c)
-	--end
+
+	love.graphics.setColor(0.0, 1.0, 0.8, 0.005*c*c)
+
 	
 	love.graphics.circle("fill", self.x, self.y, self.r*3)
 	love.graphics.circle("fill", self.x, self.y, self.r*5)

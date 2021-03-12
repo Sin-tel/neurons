@@ -24,7 +24,6 @@ prev = nil
 
 edgeCount = 0
 
-impulse = 0
 
 slomo = false
 
@@ -50,10 +49,6 @@ function dsp(time)
 		decay = decay - (decay - decay_) * 0.002
 		tweight = tweight - (tweight - tweight_) * 0.002
 
-		local noise = impulse*(math.random()-0.5)
-		--selected.state = selected.state + noise
-		impulse = impulse * 0.99
-
 		for k,v in pairs(edges) do
 			v[2].input = v[2].input + v[1].state*v[3]* tweight
 
@@ -68,9 +63,9 @@ function dsp(time)
 		for i,v in ipairs(agents) do
 			v:audio()
 			if i%2 == 0 then
-				l = l + v.state -- 0.5
+				l = l + v.state
 			else
-				r = r + v.state -- 0.5
+				r = r + v.state
 			end
 		end
 		l = 5*l / N
@@ -82,7 +77,7 @@ function dsp(time)
 		l = l - hpl
 		r = r - hpr
 
-		--out = (selected.state - 0.5)
+
 		
 
 		return clip(l)*1.5, clip(r)*1.5
@@ -122,8 +117,6 @@ function love.load()
 			addEdge(agents[i],agents[i-1])
 		end]]
 	end
-
-	
 
 	Qaudio.load()
 	Qaudio.setCallback(dsp)
@@ -227,11 +220,6 @@ function love.draw()
 	--love.graphics.clear()
 	love.graphics.setColor(0.0,1.0,0.0)
 	
-	local conn = {}
-	local maxconn = 0
-	for i = 0,100 do
-		conn[i] = 0
-	end
 
 	love.graphics.setColor(1.0,1.0,1.0,0.8)
 
@@ -311,31 +299,21 @@ end
 function setRandomWeights()
 	for k,v in pairs(edges) do
 		local w = love.math.randomNormal(3, -3)
-		--local w = (love.math.randomNormal(5, 0))
-		--local w = love.math.randomNormal(18, 0)
+
 		v[3] = w
 	end
 	for i,v in ipairs(agents) do
 		v.decay = randomFreq()
 		v.decay2 = randomFreq()
-		--v.decay = math.exp(-math.exp(love.math.randomNormal(1.0, 1.6)))
 	end
 end
 
 function randomFreq()
-
-	--[[if math.random()< 0.5 then
-		return math.exp(-12*math.random())*0.5
-	end
-	return math.exp(-5*math.random())*0.5
-	]]
 	return 0.5*math.random()^5
 end
 
 function love.mousepressed(x, y, button, istouch)
-	--selected = nil
-	--stop = not stop
-	--addEdgeRandom(x,y)
+	
 	d = 1000
 	for i,v in ipairs(agents) do
 		local dist = math.sqrt((mouseX - v.x)^2 + (mouseY - v.y)^2)
@@ -344,16 +322,6 @@ function love.mousepressed(x, y, button, istouch)
 			d = dist
 		end
 	end
-	--selected.state = -selected.state
-
-
-	--removeEdge(selected)
-	--if(math.abs(selected.state) < 0.1) then
-		impulse = 0.5
-		selected.x = selected.x + (math.random()-0.5)*10
-		selected.y = selected.y + (math.random()-0.5)*10
-	--end
-
 end
 
 function addEdgeRandom(x,y)
