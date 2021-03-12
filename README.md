@@ -13,7 +13,7 @@ Each time step:
  - this signal is then put through a nonlinearity
  - this is the output of the neuron
   
-  the nonlinearity is a tanh with some soft threshold around zero
+  the nonlinearity is a tanh with some soft threshold around zero. [desmos link](https://www.desmos.com/calculator/3s9zxf2e0h)
 
 CONTROLS
 
