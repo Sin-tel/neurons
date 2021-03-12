@@ -2,6 +2,8 @@
 
 Simulates a dynamics neural network at audio rate.
 
+Requires [love2d](https://love2d.org/). Just download the .love file and run it.
+
 Each neuron has connections with random weights, drawn as directed edges.
 
 Each time step:
